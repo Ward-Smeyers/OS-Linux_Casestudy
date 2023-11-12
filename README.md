@@ -3,7 +3,7 @@
 
 ## Bash script
 
-The script na is ward_smeyers.sh
+The script name is ward_smeyers.sh
 
 
 ## NFS Sharing
