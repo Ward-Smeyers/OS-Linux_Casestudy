@@ -1,6 +1,11 @@
 
 # OS-Linux_Casestudy
 
+## Bash script
+
+The script na is ward_smeyers.sh
+
+
 ## NFS Sharing
 
 ### Install the NFS Server
@@ -32,8 +37,8 @@ This file determines what directories will be exported and which clients can acc
 ```
 <export dir.> <host1>(<options>) [... <hostn>(<options>) ]
 ```
-**options:**
-| option                | explanation                                                                                                                                                                                                                                                                                                                                                                                    |
+**Options:**
+| Option                | Explanation                                                                                                                                                                                                                                                                                                                                                                                    |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | secure (default)      | This option states that requests for shares MUST come from ports whose port number is < than 1024.                                                                                                                                                                                                                                                                                             |
 | insecure              | This option specifies that requests for shares may come from any port address.                                                                                                                                                                                                                                                                                                                 |
@@ -67,4 +72,27 @@ And that's it. We should now have a share available on our network.
 If any problems occur restart all services
 ```
 sudo systemctl restart rpcbind.service nfs-idmapd.service nfs-server.service
+```
+
+## NFS client
+
+Installation NFS-client.
+This wil install the package necessary to access the shared folder.
+```
+sudo dnf -y install nfs-utils
+```
+
+Creating a mount on the client to the shared folder on the server.
+Syntax:
+```
+mount -t nfs <host>:</sharedir> </localdir>
+```
+Example:
+```
+mount -t nfs 192.168.56.102:/var /mnt
+```
+Result:
+```
+[ws@fedora3 ~]$ ls /mnt
+nfs_share1
 ```
