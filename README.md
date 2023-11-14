@@ -1,6 +1,19 @@
 
 # OS-Linux_Casestudy
 
+## Install an SSH server
+
+If openssh-servern is not installed yet, install it with the folowing command (for Redhad based distros)
+```
+sudo yum install openssh-server
+```
+Enable the ssh deamon with these 3 commands.
+```
+sudo systemctl enable sshd
+sudo systemctl start sshd
+sudo systemctl status sshd
+```
+
 ## Bash script
 
 The script name is ward_smeyers.sh
