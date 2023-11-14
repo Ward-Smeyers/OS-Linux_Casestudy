@@ -14,7 +14,63 @@ sudo systemctl start sshd
 sudo systemctl status sshd
 ```
 
-## Bash script
+## Bash script Factorio
+
+The script I made is based on a older tutorial https://gist.github.com/othyn/e1287fd937c1e267cdbcef07227ed48c
+
+Factorio runs out of the `/opt` directory, [a directory resevered in UNIX for non-default software installation](http://www.tldp.org/LDP/Linux-Filesystem-Hierarchy/html/opt.html).
+I wil be sharing this this directory with NFS in the next capter.
+
+
+### Making the working directory:
+This will be the directory structure:
+```
+/opt
+└── Wube-Software
+    ├── backup-factorio
+    ├── factorio
+    └── factorio_headless.tar.gz
+```
+```
+mkdir /opt/Wube-Software/factorio/saves/ /opt/Wube-Software/factorio/mods/
+```
+
+### Download the factorio server:
+```
+wget -O /opt/Wube-Software/factorio_headless.tar.gz https://factorio.com/get-download/stable/headless/linux64
+```
+
+### Unzip and untar the file.
+```
+tar -xf /opt/Wube-Software/factorio_headless.tar.gz --directory /opt/Wube-Software
+```
+Add the `-v` for verbose te see what is hapening.
+
+### Add factorio user:
+```
+sudo adduser --disabled-login --no-create-home --gecos factorio factorio
+```
+[The above command](http://www.unix.com/man-page/linux/8/adduser/) will add a user, not setting a password `--disabled-login`, without creating a home directory in `/home` `--no-create-home`, [without asking for user information](https://en.wikipedia.org/wiki/Gecos_field) `--gecos`, create user `factorio` and add them/create the group `factorio`.
+
+Now that the new user is created, we need to make it the owner of the Factorio directory so that it can access and perform operations within it, `sudo chown -R factorio:factorio /opt/factorio`. The `-R` [flag being recursive](https://linux.die.net/man/1/chown).
+
+### Adding the factorio.service to systemd.
+```
+sudo nano /etc/systemd/system/factorio.service
+
+[Unit]
+Description=Factorio Headless Server
+
+[Service]
+Type=simple
+User=factorio
+ExecStart=/opt/factorio/bin/x64/factorio --start-server /opt/factorio/saves/{save_file}.zip --server-settings /opt/factorio/data/server-settings.json
+```
+
+Backup all factorio files:
+```
+tar -czf /opt/Wube-Software/factorio --directory /opt/Wube-Software/backup-factorio
+```
 
 The script name is ward_smeyers.sh
 
