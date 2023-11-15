@@ -9,10 +9,31 @@ sudo yum install openssh-server
 ```
 Enable the ssh deamon with these 3 commands.
 ```
-sudo systemctl enable sshd
-sudo systemctl start sshd
+sudo systemctl enable --now sshd
 sudo systemctl status sshd
 ```
+`systemctl enable` \
+_Enable a service, without starting it. It will start automatically at the next system restart, or it can be started manually, or as a dependency of another service._
+
+`systemctl disable` \
+_Disable a service. If it is running, it will continue to run until it is stopped manually. It will not start at the next system restart, but can be started manually, or as a dependency of another service._
+
+Option `--now` \
+Enable/disable a service and start/stop it immediately.
+
+`systemctl start` \
+_Starts a service_
+
+`systemctl stop` \
+_Stops a service_
+
+`systemctl status` \
+_Check if a service is running, stopped, enabled, or masked, and display the most recent log entries. _
+
+`systemctl re-enable` \
+_Stop and restart a service, and restore its default start behavior._
+
+
 
 ## Bash script Factorio
 
@@ -40,7 +61,7 @@ mkdir /opt/Wube-Software/factorio/saves/ /opt/Wube-Software/factorio/mods/
 wget -O /opt/Wube-Software/factorio_headless.tar.gz https://factorio.com/get-download/stable/headless/linux64
 ```
 
-### Unzip and untar the file.
+### Unzip and untar the file to a specific directory.
 ```
 tar -xf /opt/Wube-Software/factorio_headless.tar.gz --directory /opt/Wube-Software
 ```
@@ -165,3 +186,12 @@ Result:
 [ws@fedora3 ~]$ ls /mnt
 nfs_share1
 ```
+
+
+# Links and sources
+
+[Enabling and disabling systemd services](https://documentation.suse.com/smart/systems-management/html/reference-systemctl-enable-disable-services/index.html)
+
+[[LINUX] Factorio Headless Server Guide](https://gist.github.com/othyn/e1287fd937c1e267cdbcef07227ed48c#file-factorio_headless_guide-md)
+
+[Syntax For Tar Command To Extract Tar Files To a Different Directory](https://www.cyberciti.biz/faq/howto-extract-tar-file-to-specific-directory-on-unixlinux/)
