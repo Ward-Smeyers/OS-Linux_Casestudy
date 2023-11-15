@@ -187,6 +187,16 @@ Result:
 nfs_share1
 ```
 
+### Mount on reboot with fstab
+The folowing command adds the lines `#nfs share mount` and `192.168.56.102:/var     /mnt    nfs     defaults        0 0` to the /etc/fstab file. [More info.](https://wiki.archlinux.org/title/fstab)
+```
+sudo sh -c "echo '#nfs share mount
+192.168.56.102:/var     /mnt    nfs     defaults        0 0' >> /etc/fstab"
+```
+To check if it was added successfully:
+```
+sudo cat /etc/fstab | grep /mnt
+```
 
 # Links and sources
 
@@ -195,3 +205,7 @@ nfs_share1
 [[LINUX] Factorio Headless Server Guide](https://gist.github.com/othyn/e1287fd937c1e267cdbcef07227ed48c#file-factorio_headless_guide-md)
 
 [Syntax For Tar Command To Extract Tar Files To a Different Directory](https://www.cyberciti.biz/faq/howto-extract-tar-file-to-specific-directory-on-unixlinux/)
+
+[How to configure a NFS mounting in fstab?](https://askubuntu.com/questions/890981/how-to-configure-a-nfs-mounting-in-fstab)
+
+[Sudo echo "something" >> /etc/privilegedFile doesn't work](https://stackoverflow.com/questions/84882/sudo-echo-something-etc-privilegedfile-doesnt-work)
