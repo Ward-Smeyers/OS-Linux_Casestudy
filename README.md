@@ -92,6 +92,17 @@ Backup all factorio files:
 ```
 tar -czf /opt/Wube-Software/factorio --directory /opt/Wube-Software/backup-factorio
 ```
+Yes No question:
+```
+while true; do
+        read -p "Would you like to create a factorio folder $DIR ? [Y or n]" yn
+        case $yn in
+            [Yy]* ) mkdir -pv /opt/Wube-Software/factorio/saves/ /opt/Wube-Software/factorio/mods/; echo "Factorio directory created"; break;; # Making the working directory and break out prompt loop
+            [Nn]* ) exit;; # Exit the script
+            * ) echo "Please answer yes or no.";;
+        esac
+    done
+```
 
 The script name is ward_smeyers.sh
 
