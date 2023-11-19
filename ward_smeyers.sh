@@ -1,11 +1,11 @@
 #! /bin/bash
 
-
-if ls /opt/Wube-Software | grep factorio
+DIR="/opt/Wube-Software/factorio"
+if [ -d "$DIR" ];
 then
-echo "factorio directory found"
+    echo "factorio directory found"
 else
-echo "factorio directory missing"
+    echo "factorio directory missing"
 fi
 
 # # Making the working directory
