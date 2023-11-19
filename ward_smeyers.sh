@@ -3,9 +3,17 @@
 DIR="/opt/Wube-Software/factorio"
 if [ -d "$DIR" ];
 then
-    echo "factorio directory found"
+    echo "Factorio directory found"
 else
-    echo "factorio directory missing"
+    echo "Factorio directory missing"
+    while true; do
+        read -p "Would you like to create a factorio folder $DIR ? [Y or n]" yn
+        case $yn in
+            [Yy]* ) mkdir -pv /opt/Wube-Software/factorio/saves/ /opt/Wube-Software/factorio/mods/; echo "Factorio directory created"; break;;
+            [Nn]* ) exit;;
+            * ) echo "Please answer yes or no.";;
+        esac
+    done
 fi
 
 # # Making the working directory
