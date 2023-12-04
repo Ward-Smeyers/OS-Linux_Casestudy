@@ -1,7 +1,14 @@
 
 # OS-Linux_Casestudy
 
-## Install an SSH server
+# Fedora Linux
+
+To update the VM use:
+```
+sudo yum update
+```
+
+# Install an SSH server
 
 If openssh-servern is not installed yet, install it with the folowing command (for Redhad based distros)
 ```
@@ -28,14 +35,14 @@ _Starts a service_
 _Stops a service_
 
 `systemctl status` \
-_Check if a service is running, stopped, enabled, or masked, and display the most recent log entries. _
+_Check if a service is running, stopped, enabled, or masked, and display the most recent log entries._
 
 `systemctl re-enable` \
 _Stop and restart a service, and restore its default start behavior._
 
 
 
-## Bash script Factorio
+# Bash script Factorio
 
 The script I made is based on a older tutorial https://gist.github.com/othyn/e1287fd937c1e267cdbcef07227ed48c
 
@@ -43,7 +50,7 @@ Factorio runs out of the `/opt` directory, [a directory resevered in UNIX for no
 I wil be sharing this this directory with NFS in the next capter.
 
 
-### Making the working directory:
+## Making the working directory:
 This will be the directory structure:
 ```
 /opt
@@ -56,18 +63,18 @@ This will be the directory structure:
 mkdir /opt/Wube-Software/factorio/saves/ /opt/Wube-Software/factorio/mods/
 ```
 
-### Download the factorio server:
+## Download the factorio server:
 ```
 wget -O /opt/Wube-Software/factorio_headless.tar.gz https://factorio.com/get-download/stable/headless/linux64
 ```
 
-### Unzip and untar the file to a specific directory.
+## Unzip and untar the file to a specific directory.
 ```
 tar -xf /opt/Wube-Software/factorio_headless.tar.gz --directory /opt/Wube-Software
 ```
 Add the `-v` for verbose te see what is hapening.
 
-### Add factorio user:
+## Add factorio user:
 ```
 sudo adduser --disabled-login --no-create-home --gecos factorio factorio
 ```
@@ -75,7 +82,7 @@ sudo adduser --disabled-login --no-create-home --gecos factorio factorio
 
 Now that the new user is created, we need to make it the owner of the Factorio directory so that it can access and perform operations within it, `sudo chown -R factorio:factorio /opt/factorio`. The `-R` [flag being recursive](https://linux.die.net/man/1/chown).
 
-### Adding the factorio.service to systemd.
+## Adding the factorio.service to systemd.
 ```
 sudo nano /etc/systemd/system/factorio.service
 
@@ -107,9 +114,9 @@ while true; do
 The script name is ward_smeyers.sh
 
 
-## NFS Sharing
+# NFS Sharing
 
-### Install the NFS Server
+## Install the NFS Server
 
 ```
 sudo dnf -y install nfs-utils libnfsidmap
@@ -121,7 +128,7 @@ sudo systemctl start rpc-statd
 sudo systemctl start nfs-idmapd
 ```
 
-### Creating an NFS Share
+## Creating an NFS Share
 
 We will create a unique folder for this example.
 This folden will also to be universally readable and writeable as, for this example, we will rely solely on NFS permissions to manage access to the share.
@@ -130,7 +137,7 @@ mkdir /var/nfs_share1
 chmod 777 /var/nfs_share1
 ```
 
-### Edit /etc/exports
+## Edit /etc/exports
 
 This file determines what directories will be exported and which clients can access it.
 
@@ -175,7 +182,7 @@ If any problems occur restart all services
 sudo systemctl restart rpcbind.service nfs-idmapd.service nfs-server.service
 ```
 
-## NFS client
+# NFS client
 
 Installation NFS-client.
 This wil install the package necessary to access the shared folder.
@@ -198,7 +205,7 @@ Result:
 nfs_share1
 ```
 
-### Mount on reboot with fstab
+## Mount on reboot with fstab
 The folowing command adds the lines `#nfs share mount` and `192.168.56.102:/var     /mnt    nfs     defaults        0 0` to the /etc/fstab file. [More info.](https://wiki.archlinux.org/title/fstab)
 ```
 sudo sh -c "echo '#nfs share mount
@@ -209,14 +216,88 @@ To check if it was added successfully:
 sudo cat /etc/fstab | grep /mnt
 ```
 
+# Apache webserver
+
+Install, start and enable **The Apache HTTP Server** \
+
+```
+sudo dnf install httpd -y
+sudo systemctl start httpd.service
+sudo systemctl enable httpd.service
+sudo systemctl status httpd.service
+```
+Desired output: \
+enabled \
+active (running)
+```
+Last metadata expiration check: 0:25:44 ago on Mon 04 Dec 2023 04:51:49 PM CET.
+Package httpd-2.4.58-1.fc38.x86_64 is already installed.
+Dependencies resolved.
+Nothing to do.
+Complete!
+● httpd.service - The Apache HTTP Server
+     Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; preset: disabled)
+    Drop-In: /usr/lib/systemd/system/service.d
+             └─10-timeout-abort.conf
+     Active: active (running) since Mon 2023-12-04 17:13:40 CET; 3min 54s ago
+       Docs: man:httpd.service(8)
+   Main PID: 11842 (httpd)
+     Status: "Total requests: 0; Idle/Busy workers 100/0;Requests/sec: 0; Bytes served/sec:   0 B/sec"
+      Tasks: 177 (limit: 4633)
+     Memory: 19.5M
+        CPU: 366ms
+```
+## Apache test page
+This page should be viseble in fedora http://Localhost:80 .
+![Alt text](<Apache test page eg.png>)
+
+
+## Firewall
+### Important
+This exposes your computer to the Internet and potential attackers. Secure your system and your Apache installation properly before exposing your server to the Internet. 
+
+Apache uses port 80 for plain http connections and port 443 for TLS/SSL connections by default. To make this service available from other computers or the Internet, allow Apache through the firewall using any one the following commands:
+
+**To allow Apache through the firewall at each boot:**
+
+- For plain HTTP connections:
+```
+sudo firewall-cmd --permanent --add-service=http
+```
+- For TLS/SSL connections:
+
+```
+sudo firewall-cmd --permanent --add-service=https
+```
+
+**To allow Apache through the firewall instantly (this boot):**
+
+- For plain HTTP connections:
+```
+sudo firewall-cmd --add-service=http
+```
+- For TLS/SSL connections:
+```
+sudo firewall-cmd --add-service=https
+```
+## Apache test page
+This page should be viseble in fedora (http://Localhost:80) and now also on your main pc (http://192.168.56.104:80 IP of the fedora VM)
+![Alt text](<Apache test page eg.png>)
+
 # Links and sources
 
+## SSH
 [Enabling and disabling systemd services](https://documentation.suse.com/smart/systems-management/html/reference-systemctl-enable-disable-services/index.html)
 
+## Bash script
 [[LINUX] Factorio Headless Server Guide](https://gist.github.com/othyn/e1287fd937c1e267cdbcef07227ed48c#file-factorio_headless_guide-md)
 
 [Syntax For Tar Command To Extract Tar Files To a Different Directory](https://www.cyberciti.biz/faq/howto-extract-tar-file-to-specific-directory-on-unixlinux/)
 
+## NFS server 
 [How to configure a NFS mounting in fstab?](https://askubuntu.com/questions/890981/how-to-configure-a-nfs-mounting-in-fstab)
 
 [Sudo echo "something" >> /etc/privilegedFile doesn't work](https://stackoverflow.com/questions/84882/sudo-echo-something-etc-privilegedfile-doesnt-work)
+
+## Apache webserver
+[Getting-started-with-apache-http-server](https://docs.fedoraproject.org/en-US/quick-docs/getting-started-with-apache-http-server/)
