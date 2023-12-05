@@ -248,7 +248,7 @@ Complete!
         CPU: 366ms
 ```
 ## Apache test page
-This page should be viseble in fedora http://Localhost:80 .
+This page should be viseble in fedora http://Localhost:80.
 ![Alt text](<Apache test page eg.png>)
 
 
@@ -283,6 +283,13 @@ sudo firewall-cmd --add-service=https
 ## Apache test page
 This page should be viseble in fedora (http://Localhost:80) and now also on your main pc (http://192.168.56.104:80 IP of the fedora VM)
 ![Alt text](<Apache test page eg.png>)
+
+## Add your own web page
+Add the index.html to:
+```
+/var/www/html/
+```
+If you refresh the browser you should see your own page
 
 # Links and sources
 
