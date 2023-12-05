@@ -17,7 +17,7 @@ else
 fi
 
 # Backup all factorio files
-tar -czf /opt/Wube-Software/factorio/ --directory /opt/Wube-Software/backup-factorio
+tar -czf /opt/Wube-Software/backup-factorio.tar.gz /opt/Wube-Software/factorio/
 
 if [ ! -f "/opt/Wube-Software/factorio_headless.tar.gz" ];
 then
