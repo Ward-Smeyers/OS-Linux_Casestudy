@@ -284,12 +284,26 @@ sudo firewall-cmd --add-service=https
 This page should be viseble in fedora (http://Localhost:80) and now also on your main pc (http://192.168.56.104:80 IP of the fedora VM)
 ![Alt text](<Apache test page eg.png>)
 
+## [Configuring Apache HTTPD](https://docs.fedoraproject.org/en-US/quick-docs/getting-started-with-apache-http-server/#_configuring_apache_httpd)
+
+The foloing info is from the [docs.fedoraproject.org](https://docs.fedoraproject.org/en-US/quick-docs/getting-started-with-apache-http-server/#_configuring_apache_httpd) ist extra info on the configuration of apatche (httpd).
+
+`/etc/httpd/conf/httpd.conf` is the main Apache configuration file. Custom confirguration files are specified under `/etc/httpd/conf.d/*.conf`. If the same settings are specified in both `/etc/httpd/conf/httpd.conf` and a .conf file in `/etc/httpd/conf.d/`, the setting from the `/etc/httpd/conf.d/` file will be used.
+
+Files in `/etc/httpd/conf.d/` are read in alphabetical order: a setting from ``/etc/httpd/conf.d/z-foo.conf`` will be used over a setting from ``/etc/httpd/conf.d/foo.conf``. Similarly, a setting from ``/etc/httpd/conf.d/99-foo.conf``, will be used over a setting from ``/etc/httpd/conf.d/00-foo.conf``.
+
+As a best practice, do not modify ``/etc/httpd/conf/httpd.conf`` or any of the ``/etc/httpd/conf.d`` files shipped by Fedora packages directly. If you make any local changes to these files, then any changes to them in newer package versions will not be directly applied. Instead, a .rpmnew file will be created, and you will have to merge the changes manually.
+
+It is recommended to create a new file in ``/etc/httpd/conf.d/`` which will take precedence over the file you wish to modify, and edit the required settings. For instance, to change a setting specified in ``/etc/httpd/conf.d/foo.conf`` you could create the file ``/etc/httpd/conf.d/z-foo-local.conf``, and place your setting in that file.
+
+
+
 ## Add your own web page
 Add the index.html to:
 ```
 /var/www/html/
 ```
-If you refresh the browser you should see your own page
+If you refresh the browser you should see your own page!!!
 
 # Links and sources
 
