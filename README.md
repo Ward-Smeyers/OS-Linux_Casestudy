@@ -11,7 +11,7 @@ Through this project we would like to challenge you to immerse yourself even mor
 
 ## Table of contents
 
-This documentation was made with and for 3 fedora 38 virtual machines. And gos over the folowing things.
+This documentation was made with and for 3 fedora 38 virtual machines. And goes over the folowing things.
 - [Install an SSH server](#fedora-linux)
 - [Bash script (Factorio)](#bash-script-factorio)
 - [NFS Sharing](#nfs-sharing)
