@@ -16,16 +16,21 @@ else
     done
 fi
 
-# Backup all files in directory /opt/Wube-Software/factorio/ to a targzip file /opt/Wube-Software/backup-factorio.tar.gz
-tar -czf /opt/Wube-Software/backup-factorio.tar.gz $DIR
+if [ "$1" = "update" ] || [ "$1" = "backup" ];
+then
+    # Backup all files in directory /opt/Wube-Software/factorio/ to a targzip file /opt/Wube-Software/backup-factorio.tar.gz
+    tar -czf /opt/Wube-Software/backup-factorio.tar.gz $DIR
+fi
 
-# Check if latest version of factorio is downloaded
-if [ ! -f "/opt/Wube-Software/factorio_headless.tar.gz" ] | [ $1= '-*[D]*' ];
+if [ "$1" = "update" ] || [ "$1" = "install"];
 then
     # Downloading the latest factorio version and saving as factorio_headless.tar.gz
     wget -O /opt/Wube-Software/factorio_headless.tar.gz https://factorio.com/get-download/stable/headless/linux64
 fi
-# unzip and untar the downloaded file 
-echo "Unziping /opt/Wube-Software/factorio_headless.tar.gz"
-tar -xf /opt/Wube-Software/factorio_headless.tar.gz --directory /opt/Wube-Software
 
+if [ "$1" = "update" ] || [ "$1" = "install"];
+then
+    # unzip and untar the downloaded file 
+    echo "Unziping /opt/Wube-Software/factorio_headless.tar.gz"
+    tar -xf /opt/Wube-Software/factorio_headless.tar.gz --directory /opt/Wube-Software
+fi
