@@ -1,6 +1,22 @@
 
 # OS-Linux_Casestudy
 
+This Github repo is for the cours OS (operating systems) in ITFactory at Thomasmore Geel. 
+
+## GOAL of the project:
+In this project, you will work on a Fedora machine.
+You will apply the subject materials learned through the Operating System lectures to this new distribution. You will notice that commands can be applied to any distribution with only very small differences. 
+Through this project we would like to challenge you to immerse yourself even more in the Linux world! Success…
+
+
+## Table of contents
+
+This documentation was made with and for 3 fedora 38 virtual machines. And gos over the folowing things.
+- [Install an SSH server](#fedora-linux)
+- [Bash script (Factorio)](#bash-script-factorio)
+- [NFS Sharing](#nfs-sharing)
+- [Apache webserver](#apache-webserver)
+
 # Fedora Linux
 
 To update the VM use:
